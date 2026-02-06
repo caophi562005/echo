@@ -12,10 +12,12 @@ export const getMany = query({
 export const add = mutation({
   args: {},
   handler: async (ctx) => {
-    const userId = await ctx.db.insert("users", {
-      name: "Phi",
-    });
+    throw new Error("Tracking test");
 
-    return userId;
+    // const userId = await ctx.db.insert("users", {
+    //   name: "Phi",
+    // });
+
+    // return userId;
   },
 });
