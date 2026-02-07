@@ -15,7 +15,7 @@ export const useVapi = () => {
 
   useEffect(() => {
     // Chỉ để test , người dùng phải cho api của họ
-    const vapiInstance = new Vapi("6b0d6084-8d7d-4f9c-83f4-4ca5ef8b1e04");
+    const vapiInstance = new Vapi("");
     setVapi(vapiInstance);
 
     vapiInstance.on("call-start", () => {
@@ -65,7 +65,7 @@ export const useVapi = () => {
 
     if (vapi) {
       // Chỉ dành để test
-      vapi.start("d9e9efdc-b73c-48b7-8bac-eb12821b08f3");
+      vapi.start("");
     }
   };
 

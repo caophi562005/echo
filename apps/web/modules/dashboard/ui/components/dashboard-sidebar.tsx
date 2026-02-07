@@ -14,7 +14,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@workspace/ui/components/sidebar";
-import {} from "@workspace/ui/lib/utils";
+import { cn } from "@workspace/ui/lib/utils";
 import {
   CreditCardIcon,
   InboxIcon,
@@ -115,6 +115,10 @@ export const DashboardSidebar = () => {
                   <SidebarMenuButton
                     asChild
                     tooltip={item.title}
+                    className={cn(
+                      isActive(item.url) &&
+                        "bg-gradient-to-b from-sidebar-primary to-[#0b63f3]! text-sidebar-primary-foreground! hover:to-[#0b63f3]/90!",
+                    )}
                     isActive={isActive(item.url)}
                   >
                     <Link href={item.url}>
@@ -139,6 +143,10 @@ export const DashboardSidebar = () => {
                     asChild
                     tooltip={item.title}
                     isActive={isActive(item.url)}
+                    className={cn(
+                      isActive(item.url) &&
+                        "bg-gradient-to-b from-sidebar-primary to-[#0b63f3]! text-sidebar-primary-foreground! hover:to-[#0b63f3]/90!",
+                    )}
                   >
                     <Link href={item.url}>
                       <item.icon />
@@ -162,6 +170,10 @@ export const DashboardSidebar = () => {
                     asChild
                     tooltip={item.title}
                     isActive={isActive(item.url)}
+                    className={cn(
+                      isActive(item.url) &&
+                        "bg-gradient-to-b from-sidebar-primary to-[#0b63f3]! text-sidebar-primary-foreground! hover:to-[#0b63f3]/90!",
+                    )}
                   >
                     <Link href={item.url}>
                       <item.icon />
