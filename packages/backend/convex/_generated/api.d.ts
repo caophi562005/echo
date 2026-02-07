@@ -9,6 +9,7 @@
  */
 
 import type * as public_contactSession from "../public/contactSession.js";
+import type * as public_organizations from "../public/organizations.js";
 import type * as user from "../user.js";
 
 import type {
@@ -19,6 +20,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   "public/contactSession": typeof public_contactSession;
+  "public/organizations": typeof public_organizations;
   user: typeof user;
 }>;
 
