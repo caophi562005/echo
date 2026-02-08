@@ -1,7 +1,7 @@
-import { ConversationsLayout } from "@/modules/dashboard/ui/layouts/conversations-layout";
+import { ConversationsView } from "@/modules/dashboard/ui/views/conversations-view";
 
 const Page = () => {
-  return <ConversationsLayout>Page</ConversationsLayout>;
+  return <ConversationsView />;
 };
 
 export default Page;
