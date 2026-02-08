@@ -1,3 +1,8 @@
+import {
+  contactSessionIdAtomFamily,
+  organizationIdAtom,
+  screenAtom,
+} from "@/modules/widget/atoms/widget-atom";
 import { WidgetHeader } from "@/modules/widget/ui/components/widget-header";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "@workspace/backend/_generated/api";
@@ -15,10 +20,6 @@ import { useMutation } from "convex/react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import {
-  contactSessionIdAtomFamily,
-  organizationIdAtom,
-} from "../../atoms/widget-atom";
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -26,6 +27,8 @@ const formSchema = z.object({
 });
 
 export const WidgetAuthScreen = () => {
+  const setScreen = useSetAtom(screenAtom);
+
   const organizationId = useAtomValue(organizationIdAtom);
   const setContactSessionId = useSetAtom(
     contactSessionIdAtomFamily(organizationId || ""),
@@ -66,6 +69,7 @@ export const WidgetAuthScreen = () => {
     });
 
     setContactSessionId(contactSessionId);
+    setScreen("selection");
   };
 
   return (

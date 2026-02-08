@@ -53,6 +53,11 @@ export const create = action({
       },
       {
         prompt: args.prompt,
+        providerOptions: {
+          groq: {
+            reasoningFormat: "hidden",
+          },
+        },
       },
     );
   },
