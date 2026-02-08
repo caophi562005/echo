@@ -1,9 +1,59 @@
+import { groq } from "@ai-sdk/groq";
 import { saveMessage } from "@convex-dev/agent";
+import { generateText } from "ai";
 import { paginationOptsValidator } from "convex/server";
 import { ConvexError, v } from "convex/values";
 import { components } from "../_generated/api";
-import { mutation, query } from "../_generated/server";
+import { action, mutation, query } from "../_generated/server";
 import { supportAgent } from "../system/ai/agents/supportAgent";
+
+export const enhanceResponse = action({
+  args: {
+    prompt: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (identity === null) {
+      throw new ConvexError({
+        code: "UNAUTHORIZED",
+        message: "Identity not found",
+      });
+    }
+
+    const orgId = identity.orgId as string;
+
+    if (!orgId) {
+      throw new ConvexError({
+        code: "UNAUTHORIZED",
+        message: "Organization not found",
+      });
+    }
+
+    const response = await generateText({
+      model: groq("openai/gpt-oss-120b"),
+      providerOptions: {
+        groq: {
+          reasoningFormat: "hidden",
+          reasoningEffort: "low",
+        },
+      },
+      messages: [
+        {
+          role: "system",
+          content:
+            "Enhance the operator's message to be more professional and helpful while maintaining their intent and key information.",
+        },
+        {
+          role: "user",
+          content: args.prompt,
+        },
+      ],
+    });
+
+    return response.text;
+  },
+});
 
 export const create = mutation({
   args: {
