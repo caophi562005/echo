@@ -4,10 +4,8 @@ import { ConvexError, v } from "convex/values";
 import { components, internal } from "../_generated/api";
 import { action, query } from "../_generated/server";
 import { supportAgent } from "../system/ai/agents/supportAgent";
-import {
-  escalateConversation,
-  resolveConversation,
-} from "../system/ai/tools/resolveConversation";
+import { escalateConversation } from "../system/ai/tools/escalateConversation";
+import { resolveConversation } from "../system/ai/tools/resolveConversation";
 
 export const create = action({
   args: {
