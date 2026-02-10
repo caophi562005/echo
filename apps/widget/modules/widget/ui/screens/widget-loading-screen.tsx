@@ -6,10 +6,11 @@ import {
   loadingMessageAtom,
   organizationIdAtom,
   screenAtom,
+  widgetSettingsAtom,
 } from "@/modules/widget/atoms/widget-atom";
 import { WidgetHeader } from "@/modules/widget/ui/components/widget-header";
 import { api } from "@workspace/backend/_generated/api";
-import { useAction, useMutation } from "convex/react";
+import { useAction, useMutation, useQuery } from "convex/react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { Loader2Icon } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -28,6 +29,7 @@ export const WidgetLoadingScreen = ({
   const setLoadingMessage = useSetAtom(loadingMessageAtom);
   const setScreen = useSetAtom(screenAtom);
   const setOrganizationId = useSetAtom(organizationIdAtom);
+  const setWidgetSettings = useSetAtom(widgetSettingsAtom);
 
   const loadingMessage = useAtomValue(loadingMessageAtom);
   const contactSessionId = useAtomValue(
@@ -85,7 +87,7 @@ export const WidgetLoadingScreen = ({
 
     if (!contactSessionId) {
       setSessionValid(false);
-      setStep("done");
+      setStep("settings");
       return;
     }
 
@@ -94,13 +96,34 @@ export const WidgetLoadingScreen = ({
     validateContactSession({ contactSessionId })
       .then((result) => {
         setSessionValid(result.valid);
-        setStep("done");
+        setStep("settings");
       })
       .catch(() => {
         setSessionValid(false);
-        setStep("done");
+        setStep("settings");
       });
   }, [step, contactSessionId, validateContactSession, setLoadingMessage]);
+
+  //B3: Load widget settings
+  const widgetSettings = useQuery(
+    api.public.widgetSettings.getByOrganizationId,
+    organizationId
+      ? {
+          organizationId,
+        }
+      : "skip",
+  );
+
+  useEffect(() => {
+    if (step !== "settings") return;
+
+    setLoadingMessage("Loading widget setting...");
+
+    if (widgetSettings !== undefined && organizationId) {
+      setWidgetSettings(widgetSettings);
+      setStep("done");
+    }
+  }, [step, widgetSettings, setWidgetSettings, setStep, setLoadingMessage]);
 
   useEffect(() => {
     if (step !== "done") return;
@@ -108,7 +131,7 @@ export const WidgetLoadingScreen = ({
     const hasValidSession = contactSessionId && sessionValid;
 
     setScreen(hasValidSession ? "selection" : "auth");
-  }, [step, sessionValid, , contactSessionId, setScreen]);
+  }, [step, sessionValid, contactSessionId, setScreen]);
 
   return (
     <>
