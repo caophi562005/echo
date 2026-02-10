@@ -6,6 +6,7 @@ import { ConvexError, v } from "convex/values";
 import { components } from "../_generated/api";
 import { action, mutation, query } from "../_generated/server";
 import { supportAgent } from "../system/ai/agents/supportAgent";
+import { OPERATOR_MESSAGE_ENHANCEMENT_PROMPT } from "../system/ai/constants";
 
 export const enhanceResponse = action({
   args: {
@@ -31,18 +32,11 @@ export const enhanceResponse = action({
     }
 
     const response = await generateText({
-      model: groq("openai/gpt-oss-120b"),
-      providerOptions: {
-        groq: {
-          reasoningFormat: "hidden",
-          reasoningEffort: "low",
-        },
-      },
+      model: groq("moonshotai/kimi-k2-instruct-0905"),
       messages: [
         {
           role: "system",
-          content:
-            "Enhance the operator's message to be more professional and helpful while maintaining their intent and key information.",
+          content: OPERATOR_MESSAGE_ENHANCEMENT_PROMPT,
         },
         {
           role: "user",
@@ -165,6 +159,8 @@ export const getMany = query({
     const paginated = await supportAgent.listMessages(ctx, {
       threadId: args.threadId,
       paginationOpts: args.paginationOpts,
+      // Loại bỏ message do tool , siêu QUAN TRỌNG
+      excludeToolMessages: true,
     });
 
     return paginated;

@@ -1,9 +1,11 @@
 import { groq } from "@ai-sdk/groq";
 import { Agent } from "@convex-dev/agent";
 import { components } from "../../../_generated/api";
+import { SUPPORT_AGENT_PROMPT } from "../constants";
 
 export const supportAgent = new Agent(components.agent, {
   name: "supportAgent",
-  languageModel: groq("qwen/qwen3-32b"),
-  instructions: `You are a customer support agent. Use "resolveConversation" tool when user express finalization of the conversation. Use "escalateConversation" tool when user express escalation of the conversation or request to transfer the conversation to a human operator.`,
+  // languageModel: google("gemini-2.5-flash"),
+  languageModel: groq("moonshotai/kimi-k2-instruct-0905"),
+  instructions: SUPPORT_AGENT_PROMPT,
 });
