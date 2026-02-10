@@ -8,6 +8,7 @@
  * @module
  */
 
+import type * as http from "../http.js";
 import type * as lib_extractTextContent from "../lib/extractTextContent.js";
 import type * as lib_secrets from "../lib/secrets.js";
 import type * as private_contactSessions from "../private/contactSessions.js";
@@ -31,6 +32,7 @@ import type * as system_ai_tools_search from "../system/ai/tools/search.js";
 import type * as system_contactSessions from "../system/contactSessions.js";
 import type * as system_conversations from "../system/conversations.js";
 import type * as system_plugins from "../system/plugins.js";
+import type * as system_subscriptions from "../system/subscriptions.js";
 import type * as user from "../user.js";
 
 import type {
@@ -40,6 +42,7 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  http: typeof http;
   "lib/extractTextContent": typeof lib_extractTextContent;
   "lib/secrets": typeof lib_secrets;
   "private/contactSessions": typeof private_contactSessions;
@@ -63,6 +66,7 @@ declare const fullApi: ApiFromModules<{
   "system/contactSessions": typeof system_contactSessions;
   "system/conversations": typeof system_conversations;
   "system/plugins": typeof system_plugins;
+  "system/subscriptions": typeof system_subscriptions;
   user: typeof user;
 }>;
 
