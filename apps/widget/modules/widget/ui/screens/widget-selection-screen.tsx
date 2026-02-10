@@ -13,7 +13,11 @@ import { api } from "@workspace/backend/_generated/api";
 import { Button } from "@workspace/ui/components/button";
 import { useMutation } from "convex/react";
 import { useAtomValue, useSetAtom } from "jotai";
-import { ChevronRightIcon, MessageSquareTextIcon } from "lucide-react";
+import {
+  ChevronRightIcon,
+  MessageSquareTextIcon,
+  PhoneIcon,
+} from "lucide-react";
 import { useState } from "react";
 
 export const WidgetSelectionScreen = () => {
@@ -76,6 +80,20 @@ export const WidgetSelectionScreen = () => {
             <MessageSquareTextIcon className="size-4" />
             <span>Start chat</span>
           </div>
+          <ChevronRightIcon />
+        </Button>
+
+        <Button
+          className="h-16 w-full justify-between"
+          variant="outline"
+          onClick={() => setScreen("contact")}
+          disabled={isPending}
+        >
+          <div className="flex items-center gap-x-2">
+            <PhoneIcon className="size-4" />
+            <span>Call us</span>
+          </div>
+
           <ChevronRightIcon />
         </Button>
       </div>
