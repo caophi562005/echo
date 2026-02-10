@@ -4,6 +4,7 @@ import { Providers } from "@/components/providers";
 import { ClerkProvider } from "@clerk/nextjs";
 import { TooltipProvider } from "@workspace/ui/components/tooltip";
 import "@workspace/ui/globals.css";
+import { Toaster } from "sonner";
 
 const fontSans = Geist({
   subsets: ["latin"],
@@ -27,7 +28,10 @@ export default function RootLayout({
       >
         <ClerkProvider>
           <Providers>
-            <TooltipProvider>{children}</TooltipProvider>
+            <TooltipProvider>
+              <Toaster />
+              {children}
+            </TooltipProvider>
           </Providers>
         </ClerkProvider>
       </body>
